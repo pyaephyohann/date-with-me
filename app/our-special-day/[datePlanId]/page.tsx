@@ -221,7 +221,7 @@ const OurSpecialDay = () => {
       <div>
         <input
           type="text"
-          value={`http://localhost:3000/our-special-day/${id}`}
+          value={`https://date-with-meee.vercel.app/our-special-day/${id}`}
           ref={textRef}
           readOnly
           style={{ position: "absolute", left: "-999rem" }}
