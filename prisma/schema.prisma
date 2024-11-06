@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Places {
+  id               Int                @id @default(autoincrement())
+  name             String
+  assetUrl         String             @db.VarChar(1500)
+  datePlanBranches DatePlanPlaces[]
+}
+
+model Foods {
+  id               Int                @id @default(autoincrement())
+  name             String
+  assetUrl         String             @db.VarChar(1500)
+  datePlanBranches DatePlanFoods[]
+}
+
+model Drinks {
+  id               Int                @id @default(autoincrement())
+  name             String
+  assetUrl         String             @db.VarChar(1500)
+  datePlanBranches DatePlanDrinks[]
+}
+
+model DateTypes {
+  id               Int                @id @default(autoincrement())
+  name             String
+  assetUrl         String             @db.VarChar(1500)
+  datePlanBranches DatePlanDateTypes[]
+}
+
+model DatePlans {
+  id               Int                @id @default(autoincrement())
+  dayToDate        String
+  timeToDate       String
+  createdAt        DateTime           @default(now())
+  places           DatePlanPlaces[]
+  foods            DatePlanFoods[]
+  drinks           DatePlanDrinks[]
+  dateTypes        DatePlanDateTypes[]
+}
+
+model DatePlanPlaces {
+  id         Int      @id @default(autoincrement())
+  datePlanId Int
+  placeId    Int
+  DatePlan   DatePlans @relation(fields: [datePlanId], references: [id])
+  Place      Places    @relation(fields: [placeId], references: [id])
+}
+
+model DatePlanFoods {
+  id         Int      @id @default(autoincrement())
+  datePlanId Int
+  foodId     Int
+  DatePlan   DatePlans @relation(fields: [datePlanId], references: [id])
+  Food       Foods     @relation(fields: [foodId], references: [id])
+}
+
+model DatePlanDrinks {
+  id         Int      @id @default(autoincrement())
+  datePlanId Int
+  drinkId    Int
+  DatePlan   DatePlans @relation(fields: [datePlanId], references: [id])
+  Drink      Drinks    @relation(fields: [drinkId], references: [id])
+}
+
+model DatePlanDateTypes {
+  id         Int        @id @default(autoincrement())
+  datePlanId Int
+  dateTypeId Int
+  DatePlan   DatePlans   @relation(fields: [datePlanId], references: [id])
+  DateType   DateTypes   @relation(fields: [dateTypeId], references: [id])
+}
